@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="GenerationCandidatesDetector.nameSimilarity"
+            name="Identify structures by name">
+      </command>
+      <command
+            id="GenerationCandidatesDetector.similarityCalculation1X"
+            name="Calculate similarity with...">
+      </command>
+      <command
+            id="GenerationCandidatesDetector.similarityCalculationX"
+            name="Calculate similarity between the selected elements">
+      </command>
+      <command
+            id="GenerationCandidatesDetector.nameSimilarity.clonedetection"
+            name="Detect clones">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="generationcandidatesdetector.handlers.NameSimilarityHandler"
+            commandId="GenerationCandidatesDetector.nameSimilarity">
+      </handler>
+      <handler
+            class="generationcandidatesdetector.handlers.SimilarityCalculation1XHandler"
+            commandId="GenerationCandidatesDetector.similarityCalculation1X">
+      </handler>
+      <handler
+            class="generationcandidatesdetector.handlers.SimilarityCalculationXHandler"
+            commandId="GenerationCandidatesDetector.similarityCalculationX">
+      </handler>
+      <handler
+            class="generationcandidatesdetector.handlers.CloneDetectionHandler"
+            commandId="GenerationCandidatesDetector.clonedetection">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <menu
+               label="Generation Candidates Detector">
+            <command
+                  commandId="GenerationCandidatesDetector.nameSimilarity"
+                  label="Identify structures by name"
+                  style="push">
+            </command>
+            <command
+                  commandId="GenerationCandidatesDetector.similarityCalculation1X"
+                  label="Calculate similarity with..."
+                  style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                        <with variable="activeMenuSelection">
+                   			<and>
+                         <instanceof
+                               value="org.eclipse.jface.viewers.IStructuredSelection">
+                         </instanceof>
+                         <count
+                               value="1">
+                         </count>
+                         <iterate>
+                            <or>
+                               <instanceof
+                                     value="org.eclipse.core.resources.IFile">
+                               </instanceof>
+                               <instanceof
+                                     value="org.eclipse.jdt.core.ICompilationUnit">
+                               </instanceof>
+                            </or>
+                         </iterate></and>
+            			</with>
+                  </visibleWhen>
+            </command>
+            <command
+                  commandId="GenerationCandidatesDetector.similarityCalculationX"
+                  label="Calculate similarity between the selected elements"
+                  style="push">
+            </command>
+            <command
+                  commandId="GenerationCandidatesDetector.clonedetection"
+                  label="Detect clones"
+                  style="push">
+            </command>
+          </menu>
+      </menuContribution>
+   </extension>
+</plugin>
